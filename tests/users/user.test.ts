@@ -50,19 +50,6 @@ describe("users auth endpoints", () => {
     refreshToken = res.body.refreshToken;
   });
 
-  it("should allow POST to /auth/refresh-token", async () => {
-    const res = await request
-      .post("/auth/refresh-token")
-      .set({ Authorization: `Bearer ${accessToken}` })
-      .send({ refreshToken });
-    expect(res.status).to.equal(201);
-    expect(res.body).not.to.be.empty;
-    expect(res.body).to.be.an("object");
-    expect(res.body.accessToken).to.be.a("string");
-    accessToken = res.body.accessToken;
-    refreshToken = res.body.refreshToken;
-  });
-
   it("should allow GET to /user/:userId with an accessToken", async () => {
     const res = await request
       .get(`/users/${firstUserId}`)
@@ -74,6 +61,19 @@ describe("users auth endpoints", () => {
     expect(res.body._id).to.be.a("string");
     expect(res.body._id).to.equal(firstUserId);
     expect(res.body.email).to.equal(firstUserBody.email);
+  });
+
+  it("should allow POST to /auth/refresh-token", async () => {
+    const res = await request
+      .post("/auth/refresh-token")
+      .set({ Authorization: `Bearer ${accessToken}` })
+      .send({ refreshToken });
+    expect(res.status).to.equal(201);
+    expect(res.body).not.to.be.empty;
+    expect(res.body).to.be.an("object");
+    expect(res.body.accessToken).to.be.a("string");
+    accessToken = res.body.accessToken;
+    refreshToken = res.body.refreshToken;
   });
 
   it("should allow PATCH to /user/:userId with an accessToken", async () => {
