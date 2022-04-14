@@ -10,10 +10,14 @@ import debug from "debug";
 import expressWinston from "express-winston";
 import winston from "winston";
 import express, { Application } from "express";
+import { CommonRoutesConfig } from "./common/common.routes.config";
+import { UsersRoutes } from "./users/users.routes.config";
+import { AuthRoutes } from "./auth/auth.routes.config";
 
 const app: Application = express();
 const server: http.Server = http.createServer(app);
 const port: number = parseInt(process.env.PORT as string, 10);
+const routes: Array<CommonRoutesConfig> = [];
 
 const debugLog: debug.IDebugger = debug("app");
 
@@ -38,10 +42,16 @@ const loggerOptions: expressWinston.LoggerOptions = {
 
 app.use(expressWinston.logger(loggerOptions));
 
+routes.push(new UsersRoutes(app));
+routes.push(new AuthRoutes(app));
+
 if (!port) {
   process.exit(1);
 }
 
 export default server.listen(port, () => {
+  routes.forEach((route) => {
+    console.log(`Route configured for ${route.getName()}`);
+  });
   console.log(`Server running on port: ${port}`);
 });
