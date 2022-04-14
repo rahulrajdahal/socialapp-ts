@@ -27,7 +27,7 @@ class AuthController {
       const user = usersDao.getUserByEmail(req.body.email);
       console.log(user);
 
-      return res.status(201).send({ accessToken: token, resfreshToken: hash });
+      return res.status(201).send({ accessToken: token, refreshToken: hash });
     } catch (e) {
       log("create JWT error: ", e);
       return res.status(500).send();
