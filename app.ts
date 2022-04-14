@@ -18,7 +18,6 @@ const app: Application = express();
 const server: http.Server = http.createServer(app);
 const port: number = parseInt(process.env.PORT as string, 10);
 const routes: Array<CommonRoutesConfig> = [];
-
 const debugLog: debug.IDebugger = debug("app");
 
 app.use(cors());
@@ -33,12 +32,12 @@ const loggerOptions: expressWinston.LoggerOptions = {
   ),
 };
 
-// if (!process.env.DEBUG) {
-//   // loggerOptions.meta = false;
-//   if (typeof global.it === "function") {
-//     loggerOptions.level = "http";
-//   }
-// }
+if (!process.env.DEBUG) {
+  // loggerOptions.meta = false;
+  if (typeof global.it === "function") {
+    loggerOptions.level = "http";
+  }
+}
 
 app.use(expressWinston.logger(loggerOptions));
 
@@ -51,7 +50,7 @@ if (!port) {
 
 export default server.listen(port, () => {
   routes.forEach((route) => {
-    console.log(`Route configured for ${route.getName()}`);
+    debugLog(`Route configured for ${route.getName()}`);
   });
   console.log(`Server running on port: ${port}`);
 });
