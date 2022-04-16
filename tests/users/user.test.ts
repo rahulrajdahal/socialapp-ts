@@ -10,8 +10,8 @@ const firstUserBody = {
   password: "Heyyy!1!",
 };
 
-let firstUserId: string;
-let accessToken: string;
+export let firstUserId: string;
+export let accessToken: string;
 let refreshToken: string;
 
 describe("users auth endpoints", () => {

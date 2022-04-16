@@ -26,6 +26,12 @@ class UsersDao {
     log("Created a new USERS instance");
   }
 
+  posts = this.userSchema.virtual("posts", {
+    ref: "Post",
+    localField: "_id",
+    foreignField: "user",
+  });
+
   async getAllUsers(limit = 25, page = 0) {
     return this.User.find({})
       .limit(limit)
