@@ -17,7 +17,7 @@ class PostsController {
 
   getPost = async (req: Request, res: Response) => {
     const post = await postService.getById(req.body.id, req.body.user);
-    res.status(200).send({ post });
+    res.status(200).send(post);
   };
 
   patchPost = async (req: Request, res: Response) => {
