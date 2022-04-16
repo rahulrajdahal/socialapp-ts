@@ -27,6 +27,9 @@ class PostService implements CRUD {
   async deleteById(id: string) {
     return postsDao.deletePostById(id);
   }
+  async deleteAll(user: string) {
+    return postsDao.deleteAllPosts(user);
+  }
 }
 
 export default new PostService();

@@ -57,10 +57,7 @@ class PostsDao {
     return this.Post.findOne({ title }).exec();
   }
 
-  async updatePostById(
-    postId: string,
-    postFields: PatchPostDto | PutPostDto
-  ) {
+  async updatePostById(postId: string, postFields: PatchPostDto | PutPostDto) {
     const existingPost = await this.Post.findOneAndUpdate(
       { _id: postId },
       { $set: postFields },
@@ -72,6 +69,10 @@ class PostsDao {
 
   async deletePostById(postId: string) {
     return this.Post.findOneAndDelete({ _id: postId }).exec();
+  }
+
+  async deleteAllPosts(user: any) {
+    return this.Post.deleteMany({ user: user._id }).exec();
   }
 }
 

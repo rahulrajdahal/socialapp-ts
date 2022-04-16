@@ -1,5 +1,6 @@
 import debug from "debug";
 import { Request, Response, NextFunction } from "express";
+import postsService from "../../posts/services/posts.service";
 
 import usersService from "../services/users.service";
 
@@ -57,6 +58,17 @@ class UsersMiddleware {
     req.body.id = req.params.userId;
     next();
   }
+  deletePosts = async (req: Request, res: Response, next: NextFunction) => {
+    const user = await usersService.getById(req.params.userId);
+
+    if (user) {
+      res.locals.user = user;
+      await postsService.deleteAll(user);
+      next();
+    } else {
+      res.status(404).send({ error: `User ${req.params.userId} not found.` });
+    }
+  };
 }
 
 export default new UsersMiddleware();

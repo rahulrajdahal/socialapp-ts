@@ -10,7 +10,7 @@ const firstUserBody = {
   password: "Heyyy!1!",
 };
 let firstUserId: string;
-let accessToken: string;
+export let accessToken: string;
 let refreshToken: string;
 
 const firstPostBody = {

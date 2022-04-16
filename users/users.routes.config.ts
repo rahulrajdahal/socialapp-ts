@@ -32,7 +32,7 @@ export class UsersRoutes extends CommonRoutesConfig {
       .route("/users/:userId")
       .all(usersMiddleware.validateUserExists, jwtMiddleware.validJwtNeeded)
       .get(usersController.getUser)
-      .delete(usersController.deleteUser);
+      .delete(usersMiddleware.deletePosts, usersController.deleteUser);
 
     this.app
       .route("/users/:userId")
